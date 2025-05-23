@@ -1,0 +1,13 @@
+{
+	"node": "GravityEmbed.node.ts",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["AI"],
+	"resources": {
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/payner35/GravityAI"
+			}
+		]
+	}
+}

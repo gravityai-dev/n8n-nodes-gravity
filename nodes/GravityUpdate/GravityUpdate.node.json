@@ -1,0 +1,14 @@
+{
+  "node": "n8n-nodes-base.gravityUpdate",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": ["Communication", "Development"],
+  "icon": "file:gravity.svg",
+  "resources": {
+    "primaryDocumentation": [
+      {
+        "url": "https://github.com/gravityai-dev/n8n-nodes-gravity"
+      }
+    ]
+  }
+}

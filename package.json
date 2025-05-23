@@ -1,0 +1,78 @@
+{
+  "name": "@payner35/n8n-nodes-gravity",
+  "version": "0.1.0",
+  "description": "Official n8n nodes for Gravity AI - Build AI workflows with ease",
+  "keywords": [
+    "n8n-community-node-package",
+    "gravity",
+    "ai",
+    "orchestration",
+    "claude",
+    "openai",
+    "workflow",
+    "automation"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Gravity AI",
+    "email": "support@gravityai.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gravityai-dev/n8n-nodes-gravity.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gravityai-dev/n8n-nodes-gravity/issues"
+  },
+  "homepage": "https://github.com/gravityai-dev/n8n-nodes-gravity#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.10"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "format": "prettier --write . --ignore-path .gitignore",
+    "prepublishOnly": "npm run build",
+    "postbuild": "echo 'Build completed successfully!'"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/AWSApi.credentials.js",
+      "dist/credentials/GravityApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/GravityClaude/GravityClaude.node.js",
+      "dist/nodes/GravityInput/GravityInput.node.js",
+      "dist/nodes/GravityOutput/GravityOutput.node.js",
+      "dist/nodes/GravityUpdate/GravityUpdate.node.js",
+      "dist/nodes/GravityEmbed/GravityEmbed.node.js",
+      "dist/nodes/GravityOpenAI/GravityOpenAI.node.js"
+    ]
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.797.0",
+    "@payner35/gravity-server": "^0.1.3",
+    "dotenv": "^16.4.1",
+    "openai": "^4.20.0"
+  },
+  "devDependencies": {
+    "@types/ioredis": "^5.0.0",
+    "@types/node": "^18.11.18",
+    "prettier": "^2.8.7",
+    "typescript": "~4.9.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}

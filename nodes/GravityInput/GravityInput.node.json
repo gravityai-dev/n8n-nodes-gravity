@@ -1,0 +1,13 @@
+{
+  "node": "n8n-nodes-base.gravityInput",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": ["Communication", "Development"],
+  "resources": {
+    "primaryDocumentation": [
+      {
+        "url": "https://github.com/gravityai-dev/n8n-nodes-gravity"
+      }
+    ]
+  }
+}
