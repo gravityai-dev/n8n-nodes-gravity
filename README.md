@@ -16,7 +16,7 @@ Official n8n nodes for [Gravity AI](https://gravityai.dev) - Build powerful AI w
 
 1. In n8n, go to **Settings** > **Community Nodes**
 2. Select **Install**
-3. Enter `@payner35/n8n-nodes-gravity`
+3. Enter `https://github.com/gravityai-dev/n8n-nodes-gravity`
 4. Click **Install**
 
 ### Manual Installation
