@@ -1,5 +1,5 @@
 {
-  "name": "@payner35/n8n-nodes-gravity",
+  "name": "@gravityai-dev/n8n-nodes-gravity",
   "version": "0.1.0",
   "description": "Official n8n nodes for Gravity AI - Build AI workflows with ease",
   "keywords": [

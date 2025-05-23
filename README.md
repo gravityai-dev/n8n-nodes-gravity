@@ -1,6 +1,6 @@
-# @payner35/n8n-nodes-gravity
+# n8n-nodes-gravity
 
-Official n8n nodes for [Gravity AI](https://gravityai.dev) - Build powerful AI workflows with Claude, OpenAI, and more.
+Official n8n nodes for [Gravity AI](https://gravity-ai.com) - Build AI workflows with ease.
 
 ## Features
 
@@ -22,7 +22,7 @@ Official n8n nodes for [Gravity AI](https://gravityai.dev) - Build powerful AI w
 ### Manual Installation
 
 ```bash
-npm install -g @payner35/n8n-nodes-gravity
+npm install -g @gravityai-dev/n8n-nodes-gravity
 ```
 
 Then restart n8n.
