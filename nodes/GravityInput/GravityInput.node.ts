@@ -8,7 +8,11 @@
 import { INodeType, INodeTypeDescription, ITriggerFunctions, ITriggerResponse, NodeConnectionType } from "n8n-workflow";
 
 // Import from gravity-server
-import { EventBus, QUERY_MESSAGE_CHANNEL } from "@gravityai-dev/gravity-server";
+import { 
+  EventBus,
+  EVENT_CHANNEL_PREFIX,
+  QUERY_MESSAGE_CHANNEL
+} from "@gravityai-dev/gravity-server";
 
 console.log(`[Gravity Input] Module loaded at ${new Date().toISOString()}`);
 
@@ -70,12 +74,26 @@ export class GravityInput implements INodeType {
       console.log(`[Gravity Input] Creating EventBus with serviceId: ${serviceId}`);
 
       // Create event bus connection
+      console.log(`[Gravity Input] Creating EventBus with serverUrl: ${serverUrl.substring(0, serverUrl.indexOf('@') > 0 ? serverUrl.indexOf('@') : 10)}...`);
       const eventBus = EventBus.fromCredentials(serverUrl, apiKey, serviceId);
 
-      console.log(`[Gravity Input] EventBus created, subscribing to channel...`);
+      console.log(`[Gravity Input] EventBus created successfully`);
+
+      // Add the event channel prefix to the channel name
+      const fullChannel = `${EVENT_CHANNEL_PREFIX}${channel}`;
+      console.log(`[Gravity Input] Subscribing to full channel: ${fullChannel}`);
+
+      console.log(`[Gravity Input] Debug info:`, {
+        serverUrl,
+        apiKey: apiKey ? 'provided' : 'missing',
+        serviceId,
+        channel,
+        fullChannel,
+        connectionActive: !!eventBus
+      });
 
       // Subscribe to Redis channel
-      const unsubscribe = await eventBus.subscribe(channel, async (event: any) => {
+      const unsubscribe = await eventBus.subscribe(fullChannel, async (event: any) => {
         console.log(`[Gravity Input] Received event:`, JSON.stringify(event));
 
         // Extract the actual message from the event payload

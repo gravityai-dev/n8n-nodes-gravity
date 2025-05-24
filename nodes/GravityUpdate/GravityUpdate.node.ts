@@ -1,12 +1,12 @@
 import type { IExecuteFunctions, INodeExecutionData, INodeType, INodeTypeDescription } from "n8n-workflow";
 import { NodeConnectionType, NodeOperationError } from "n8n-workflow";
 
-// Import from gravity-server - using the simplified Publisher
-import {
-  AI_RESULT_CHANNEL,
+// Import from gravity-server
+import { 
+  Publisher,
   ChatState,
   MessageType,
-  Publisher,
+  AI_RESULT_CHANNEL,
   createProgressUpdate,
   createMessageChunk,
   createJsonData,
@@ -266,7 +266,7 @@ export class GravityUpdate implements INodeType {
               const progressMessage = createProgressUpdate(baseEvent, message);
 
               // Publish directly
-              await publisher.publish(outputChannel, JSON.stringify(progressMessage));
+              await publisher.publishEvent(outputChannel, progressMessage);
 
               returnData.push({
                 json: {
@@ -286,7 +286,7 @@ export class GravityUpdate implements INodeType {
               const chunkMessage = createMessageChunk(baseEvent, text);
 
               // Publish directly
-              await publisher.publish(outputChannel, JSON.stringify(chunkMessage));
+              await publisher.publishEvent(outputChannel, chunkMessage);
 
               returnData.push({
                 json: {
@@ -316,7 +316,7 @@ export class GravityUpdate implements INodeType {
                 const jsonMessage = createJsonData(baseEvent, formattedData);
 
                 // Publish directly
-                await publisher.publish(outputChannel, JSON.stringify(jsonMessage));
+                await publisher.publishEvent(outputChannel, jsonMessage);
 
                 returnData.push({
                   json: {
@@ -344,7 +344,7 @@ export class GravityUpdate implements INodeType {
               const metadataMessage = createMetadata(baseEvent, metadataStr);
 
               // Publish directly
-              await publisher.publish(outputChannel, JSON.stringify(metadataMessage));
+              await publisher.publishEvent(outputChannel, metadataMessage);
 
               returnData.push({
                 json: {

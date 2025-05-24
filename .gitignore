@@ -11,3 +11,8 @@ coverage/
 *~
 .npm/
 .cache/
+# TypeScript build info
+*.tsbuildinfo
+
+# Don't include package.json in dist
+dist/package.json

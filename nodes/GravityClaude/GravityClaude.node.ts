@@ -1,6 +1,6 @@
 import type { IExecuteFunctions, INodeType, INodeTypeDescription, INodeExecutionData } from "n8n-workflow";
 import { NodeConnectionType } from "n8n-workflow";
-import { ChatState } from '@gravityai-dev/gravity-server';
+import { ChatState } from "@gravityai-dev/gravity-server";
 
 // Import Bedrock Service
 import {
@@ -256,22 +256,15 @@ export class GravityClaude implements INodeType {
 
       // Send request to Claude
       const { fullResponse, chunkCount } = await sendClaudeRequest(bedrockConfig, requestOptions, (text, chunkIndex) =>
-        streamOutput.push(formatStreamChunk(
-          model, 
-          text, 
-          chunkIndex,
-          advancedOptions.state,
-          advancedOptions.progressMessage
-        ))
+        streamOutput.push(
+          formatStreamChunk(model, text, chunkIndex, advancedOptions.state, advancedOptions.progressMessage)
+        )
       );
 
       // Add completion chunk
-      streamOutput.push(createCompletionChunk(
-        model, 
-        chunkCount,
-        advancedOptions.state,
-        advancedOptions.progressMessage
-      ));
+      streamOutput.push(
+        createCompletionChunk(model, chunkCount, advancedOptions.state, advancedOptions.progressMessage)
+      );
 
       // Create final response
       const finalResponseObject = createFinalResponseObject(

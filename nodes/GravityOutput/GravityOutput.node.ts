@@ -1,11 +1,10 @@
 import type { IExecuteFunctions, INodeExecutionData, INodeType, INodeTypeDescription } from "n8n-workflow";
 import { NodeConnectionType, NodeOperationError } from "n8n-workflow";
 
-// Import types from gravity-server
+// Import from gravity-server
 import {
   ChatState,
   MessageType,
-  Publisher,
   AI_RESULT_CHANNEL,
   createText,
   createJsonData,
@@ -13,6 +12,7 @@ import {
   createImageResponse,
   createToolOutput,
   createActionSuggestion,
+  Publisher,
 } from "@gravityai-dev/gravity-server";
 
 export class GravityOutput implements INodeType {
@@ -311,7 +311,7 @@ export class GravityOutput implements INodeType {
             const message = createText(baseEvent, text);
 
             // Publish directly to gravity
-            await publisher.publish(AI_RESULT_CHANNEL, JSON.stringify(message));
+            await publisher.publishEvent(AI_RESULT_CHANNEL, message);
             break;
           }
 
@@ -333,7 +333,7 @@ export class GravityOutput implements INodeType {
               const message = createJsonData(baseEvent, formattedData);
 
               // Publish directly to gravity
-              await publisher.publish(AI_RESULT_CHANNEL, JSON.stringify(message));
+              await publisher.publishEvent(AI_RESULT_CHANNEL, message);
             } catch (error) {
               throw new NodeOperationError(this.getNode(), "Invalid JSON data", { itemIndex });
             }
@@ -348,7 +348,7 @@ export class GravityOutput implements INodeType {
             const message = createMdxComponent(baseEvent, code);
 
             // Publish directly to gravity
-            await publisher.publish(AI_RESULT_CHANNEL, JSON.stringify(message));
+            await publisher.publishEvent(AI_RESULT_CHANNEL, message);
             break;
           }
 
@@ -361,7 +361,7 @@ export class GravityOutput implements INodeType {
             const message = createImageResponse(baseEvent, url, alt);
 
             // Publish directly to gravity
-            await publisher.publish(AI_RESULT_CHANNEL, JSON.stringify(message));
+            await publisher.publishEvent(AI_RESULT_CHANNEL, message);
             break;
           }
 
@@ -376,7 +376,7 @@ export class GravityOutput implements INodeType {
               const message = createToolOutput(baseEvent, tool, result);
 
               // Publish directly to gravity
-              await publisher.publish(AI_RESULT_CHANNEL, JSON.stringify(message));
+              await publisher.publishEvent(AI_RESULT_CHANNEL, message);
             } catch (error) {
               throw new NodeOperationError(this.getNode(), "Invalid JSON data for tool output", { itemIndex });
             }
@@ -394,7 +394,7 @@ export class GravityOutput implements INodeType {
               const message = createActionSuggestion(baseEvent, actionType, payload);
 
               // Publish directly to gravity
-              await publisher.publish(AI_RESULT_CHANNEL, JSON.stringify(message));
+              await publisher.publishEvent(AI_RESULT_CHANNEL, message);
             } catch (error) {
               throw new NodeOperationError(this.getNode(), "Invalid JSON data for action payload", { itemIndex });
             }

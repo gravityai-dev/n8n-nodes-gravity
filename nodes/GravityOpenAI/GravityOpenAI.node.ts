@@ -1,6 +1,6 @@
 import type { IExecuteFunctions, INodeType, INodeTypeDescription, INodeExecutionData } from "n8n-workflow";
 import { NodeConnectionType } from "n8n-workflow";
-import { ChatState } from '@gravityai-dev/gravity-server';
+import { ChatState } from "@gravityai-dev/gravity-server";
 
 // Import OpenAI Service
 import {
@@ -203,7 +203,7 @@ export class GravityOpenAI implements INodeType {
       const maxTokens = this.getNodeParameter("maxTokens", itemIndex, 1000) as number;
       const userMessage = this.getNodeParameter("message", itemIndex, "") as string;
       const baseURL = this.getNodeParameter("baseURL", itemIndex, "") as string;
-      
+
       // Get advanced options
       const advancedOptions = this.getNodeParameter("advancedOptions", itemIndex, {}) as {
         state?: string;
@@ -234,22 +234,15 @@ export class GravityOpenAI implements INodeType {
 
       // Send request to OpenAI
       const { fullResponse, chunkCount } = await sendOpenAIRequest(openAIConfig, requestOptions, (text, chunkIndex) =>
-        streamOutput.push(formatStreamChunk(
-          model, 
-          text, 
-          chunkIndex,
-          advancedOptions.state,
-          advancedOptions.progressMessage
-        ))
+        streamOutput.push(
+          formatStreamChunk(model, text, chunkIndex, advancedOptions.state, advancedOptions.progressMessage)
+        )
       );
 
       // Add completion chunk
-      streamOutput.push(createCompletionChunk(
-        model, 
-        chunkCount,
-        advancedOptions.state,
-        advancedOptions.progressMessage
-      ));
+      streamOutput.push(
+        createCompletionChunk(model, chunkCount, advancedOptions.state, advancedOptions.progressMessage)
+      );
 
       // Create final response
       const finalResponseObject = createFinalResponseObject(
