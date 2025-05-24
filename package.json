@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-gravity",
-  "version": "0.1.7",
+  "version": "0.2.1",
   "description": "Gravity AI nodes for n8n with service bus integration",
   "keywords": [
     "n8n-community-node-package",
