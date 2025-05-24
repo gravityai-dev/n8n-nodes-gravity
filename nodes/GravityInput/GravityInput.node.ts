@@ -8,7 +8,7 @@
 import { INodeType, INodeTypeDescription, ITriggerFunctions, ITriggerResponse, NodeConnectionType } from "n8n-workflow";
 
 // Import from gravity-server
-import { EventBus, QUERY_MESSAGE_CHANNEL } from "@payner35/gravity-server";
+import { EventBus, QUERY_MESSAGE_CHANNEL } from "@gravityai-dev/gravity-server";
 
 console.log(`[Gravity Input] Module loaded at ${new Date().toISOString()}`);
 

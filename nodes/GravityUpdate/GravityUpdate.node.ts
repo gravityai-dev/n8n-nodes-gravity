@@ -11,7 +11,7 @@ import {
   createMessageChunk,
   createJsonData,
   createMetadata,
-} from "@payner35/gravity-server";
+} from "@gravityai-dev/gravity-server";
 
 export class GravityUpdate implements INodeType {
   description: INodeTypeDescription = {

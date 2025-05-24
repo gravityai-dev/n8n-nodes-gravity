@@ -13,7 +13,7 @@ import {
   createImageResponse,
   createToolOutput,
   createActionSuggestion,
-} from "@payner35/gravity-server";
+} from "@gravityai-dev/gravity-server";
 
 export class GravityOutput implements INodeType {
   description: INodeTypeDescription = {
