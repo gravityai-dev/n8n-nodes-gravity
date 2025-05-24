@@ -1,5 +1,6 @@
 import OpenAI from 'openai';
 import type { INodeExecutionData } from 'n8n-workflow';
+import { ChatState } from '@gravityai-dev/gravity-server';
 
 // Type definitions
 export interface OpenAIMessage {
@@ -163,11 +164,12 @@ export function formatStreamChunk(
 			text,
 			chunkIndex,
 			timestamp: new Date().toISOString(),
+			state: ChatState.RESPONDING, // Set state to RESPONDING for streaming chunks
 		},
 	};
 }
 
-// Create a final completion chunk with state='complete'
+// Create a final completion chunk with state='COMPLETE'
 export function createCompletionChunk(model: string, chunkCount: number): INodeExecutionData {
 	return {
 		json: {
@@ -175,7 +177,7 @@ export function createCompletionChunk(model: string, chunkCount: number): INodeE
 			text: ' ',
 			chunkIndex: chunkCount,
 			timestamp: new Date().toISOString(),
-			state: 'complete', // Set lowercase for GravityPublisher
+			state: ChatState.COMPLETE, // Set state to COMPLETE for final chunk
 		},
 	};
 }

@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-gravity",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "description": "Gravity AI nodes for n8n with service bus integration",
   "keywords": [
     "n8n-community-node-package",
@@ -14,8 +14,8 @@
   "engines": {
     "node": ">=18.10"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
