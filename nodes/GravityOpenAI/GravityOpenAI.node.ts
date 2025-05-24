@@ -1,5 +1,6 @@
 import type { IExecuteFunctions, INodeType, INodeTypeDescription, INodeExecutionData } from "n8n-workflow";
 import { NodeConnectionType } from "n8n-workflow";
+import { ChatState } from '@gravityai-dev/gravity-server';
 
 // Import OpenAI Service
 import {
@@ -139,6 +140,56 @@ export class GravityOpenAI implements INodeType {
         default: "",
         description: "Optional custom base URL for OpenAI-compatible APIs (leave empty for standard OpenAI)",
       },
+      {
+        displayName: "Advanced Options",
+        name: "advancedOptions",
+        type: "collection",
+        placeholder: "Add Option",
+        default: {},
+        options: [
+          {
+            displayName: "Message State",
+            name: "state",
+            type: "options",
+            default: "",
+            description: "Override the message state for all chunks",
+            options: [
+              {
+                name: "Default (Auto)",
+                value: "",
+                description: "Use default states (RESPONDING for chunks, COMPLETE for final)",
+              },
+              {
+                name: "Thinking",
+                value: ChatState.THINKING,
+              },
+              {
+                name: "Responding",
+                value: ChatState.RESPONDING,
+              },
+              {
+                name: "Active",
+                value: ChatState.ACTIVE,
+              },
+              {
+                name: "Waiting",
+                value: ChatState.WAITING,
+              },
+              {
+                name: "Complete",
+                value: ChatState.COMPLETE,
+              },
+            ],
+          },
+          {
+            displayName: "Progress Message",
+            name: "progressMessage",
+            type: "string",
+            default: "",
+            description: "Optional progress message to include with state",
+          },
+        ],
+      },
     ],
   };
 
@@ -152,6 +203,12 @@ export class GravityOpenAI implements INodeType {
       const maxTokens = this.getNodeParameter("maxTokens", itemIndex, 1000) as number;
       const userMessage = this.getNodeParameter("message", itemIndex, "") as string;
       const baseURL = this.getNodeParameter("baseURL", itemIndex, "") as string;
+      
+      // Get advanced options
+      const advancedOptions = this.getNodeParameter("advancedOptions", itemIndex, {}) as {
+        state?: string;
+        progressMessage?: string;
+      };
 
       // Get OpenAI credentials
       const openAICredentials = await this.getCredentials("openAiApi");
@@ -177,11 +234,22 @@ export class GravityOpenAI implements INodeType {
 
       // Send request to OpenAI
       const { fullResponse, chunkCount } = await sendOpenAIRequest(openAIConfig, requestOptions, (text, chunkIndex) =>
-        streamOutput.push(formatStreamChunk(model, text, chunkIndex))
+        streamOutput.push(formatStreamChunk(
+          model, 
+          text, 
+          chunkIndex,
+          advancedOptions.state,
+          advancedOptions.progressMessage
+        ))
       );
 
       // Add completion chunk
-      streamOutput.push(createCompletionChunk(model, chunkCount));
+      streamOutput.push(createCompletionChunk(
+        model, 
+        chunkCount,
+        advancedOptions.state,
+        advancedOptions.progressMessage
+      ));
 
       // Create final response
       const finalResponseObject = createFinalResponseObject(

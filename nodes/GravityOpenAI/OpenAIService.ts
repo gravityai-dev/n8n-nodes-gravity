@@ -157,29 +157,46 @@ export function formatStreamChunk(
 	model: string,
 	text: string,
 	chunkIndex: number,
+	stateOverride?: string,
+	progressMessage?: string,
 ): INodeExecutionData {
-	return {
-		json: {
-			model,
-			text,
-			chunkIndex,
-			timestamp: new Date().toISOString(),
-			state: ChatState.RESPONDING, // Set state to RESPONDING for streaming chunks
-		},
+	const json: any = {
+		model,
+		text,
+		chunkIndex,
+		timestamp: new Date().toISOString(),
+		state: stateOverride || ChatState.RESPONDING, // Use override if provided, otherwise default
 	};
+	
+	// Add progress message if provided
+	if (progressMessage) {
+		json.progressMessage = progressMessage;
+	}
+	
+	return { json };
 }
 
 // Create a final completion chunk with state='COMPLETE'
-export function createCompletionChunk(model: string, chunkCount: number): INodeExecutionData {
-	return {
-		json: {
-			model,
-			text: ' ',
-			chunkIndex: chunkCount,
-			timestamp: new Date().toISOString(),
-			state: ChatState.COMPLETE, // Set state to COMPLETE for final chunk
-		},
+export function createCompletionChunk(
+	model: string, 
+	chunkCount: number,
+	stateOverride?: string,
+	progressMessage?: string,
+): INodeExecutionData {
+	const json: any = {
+		model,
+		text: ' ',
+		chunkIndex: chunkCount,
+		timestamp: new Date().toISOString(),
+		state: stateOverride || ChatState.COMPLETE, // Use override if provided, otherwise default
 	};
+	
+	// Add progress message if provided
+	if (progressMessage) {
+		json.progressMessage = progressMessage;
+	}
+	
+	return { json };
 }
 
 // Format an error response
