@@ -10,7 +10,6 @@ import { INodeType, INodeTypeDescription, ITriggerFunctions, ITriggerResponse, N
 // Import from gravity-server
 import { 
   EventBus,
-  EVENT_CHANNEL_PREFIX,
   QUERY_MESSAGE_CHANNEL
 } from "@gravityai-dev/gravity-server";
 
@@ -79,21 +78,16 @@ export class GravityInput implements INodeType {
 
       console.log(`[Gravity Input] EventBus created successfully`);
 
-      // Add the event channel prefix to the channel name
-      const fullChannel = `${EVENT_CHANNEL_PREFIX}${channel}`;
-      console.log(`[Gravity Input] Subscribing to full channel: ${fullChannel}`);
-
       console.log(`[Gravity Input] Debug info:`, {
         serverUrl,
         apiKey: apiKey ? 'provided' : 'missing',
         serviceId,
         channel,
-        fullChannel,
         connectionActive: !!eventBus
       });
 
       // Subscribe to Redis channel
-      const unsubscribe = await eventBus.subscribe(fullChannel, async (event: any) => {
+      const unsubscribe = await eventBus.subscribe(channel, async (event: any) => {
         console.log(`[Gravity Input] Received event:`, JSON.stringify(event));
 
         // Extract the actual message from the event payload
