@@ -1,6 +1,6 @@
 {
-  "name": "n8n-nodes-gravity",
-  "version": "0.2.7",
+  "name": "@gravityai-dev/n8n-nodes-gravity",
+  "version": "0.2.8",
   "description": "Gravity AI nodes for n8n with service bus integration",
   "keywords": [
     "n8n-community-node-package",
@@ -9,7 +9,11 @@
   ],
   "license": "MIT",
   "author": {
-    "name": "Gavin Payne"
+    "name": "Gravity AI Team"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "engines": {
     "node": ">=18.10"
@@ -42,7 +46,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.699.0",
-    "@gravityai-dev/gravity-server": "^0.2.7",
+    "@gravityai-dev/gravity-server": "^0.2.8",
     "dotenv": "^16.4.1",
     "openai": "^4.77.0"
   },
