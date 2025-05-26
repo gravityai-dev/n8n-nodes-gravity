@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-gravity",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Gravity AI nodes for n8n with service bus integration",
   "keywords": [
     "n8n-community-node-package",
@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.699.0",
-    "@gravityai-dev/gravity-server": "^0.2.6",
+    "@gravityai-dev/gravity-server": "^0.2.7",
     "dotenv": "^16.4.1",
     "openai": "^4.77.0"
   },
