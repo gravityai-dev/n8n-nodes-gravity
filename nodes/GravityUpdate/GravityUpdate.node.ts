@@ -279,7 +279,7 @@ export class GravityUpdate implements INodeType {
 
               returnData.push({
                 json: {
-                  success: true,
+                  state,
                   updateType: "progressUpdate",
                   timestamp: new Date().toISOString(),
                   message,
@@ -299,7 +299,7 @@ export class GravityUpdate implements INodeType {
 
               returnData.push({
                 json: {
-                  success: true,
+                  state,
                   updateType: "messageChunk",
                   timestamp: new Date().toISOString(),
                   textPreview: text.length > 30 ? `${text.substring(0, 30)}...` : text,
@@ -329,7 +329,7 @@ export class GravityUpdate implements INodeType {
 
                 returnData.push({
                   json: {
-                    success: true,
+                    state,
                     updateType: "jsonData",
                     timestamp: new Date().toISOString(),
                     dataType: jsonDataFieldName,
@@ -357,7 +357,7 @@ export class GravityUpdate implements INodeType {
 
               returnData.push({
                 json: {
-                  success: true,
+                  state,
                   updateType: "metadata",
                   timestamp: new Date().toISOString(),
                   key,
