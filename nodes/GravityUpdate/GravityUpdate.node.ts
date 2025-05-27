@@ -2,7 +2,7 @@ import type { IExecuteFunctions, INodeExecutionData, INodeType, INodeTypeDescrip
 import { NodeConnectionType, NodeOperationError } from "n8n-workflow";
 
 // Import from gravity-server
-import { 
+import {
   Publisher,
   ChatState,
   MessageType,
@@ -59,6 +59,14 @@ export class GravityUpdate implements INodeType {
         default: "",
         description: "User ID for this update",
         required: true,
+      },
+      {
+        displayName: "State",
+        name: "messageState",
+        type: "string",
+        default: ChatState.ACTIVE,
+        description: "State of the chat message",
+        required: false,
       },
       {
         displayName: "Update Type",
@@ -241,9 +249,10 @@ export class GravityUpdate implements INodeType {
           const outputChannel = AI_RESULT_CHANNEL;
 
           // Determine message state
-          let state = ChatState.ACTIVE;
+          let state = this.getNodeParameter("messageState", itemIndex, ChatState.ACTIVE) as ChatState;
+          // Advanced options override the default state if enabled
           if (advancedOptions) {
-            state = this.getNodeParameter("state", itemIndex, ChatState.ACTIVE) as ChatState;
+            state = this.getNodeParameter("state", itemIndex, state) as ChatState;
           }
 
           // Create base event for all message types
