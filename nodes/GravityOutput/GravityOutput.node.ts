@@ -8,7 +8,6 @@ import {
   AI_RESULT_CHANNEL,
   createText,
   createJsonData,
-  createMdxComponent,
   createImageResponse,
   createToolOutput,
   createActionSuggestion,
@@ -98,7 +97,6 @@ export class GravityOutput implements INodeType {
         options: [
           { name: "Text", value: MessageType.TEXT },
           { name: "JSON Data", value: MessageType.JSON_DATA },
-          { name: "MDX Component", value: MessageType.MDX_COMPONENT },
           { name: "Image Response", value: MessageType.IMAGE_RESPONSE },
           { name: "Tool Output", value: MessageType.TOOL_OUTPUT },
           { name: "Action Suggestion", value: MessageType.ACTION_SUGGESTION },
@@ -148,22 +146,6 @@ export class GravityOutput implements INodeType {
         displayOptions: {
           show: {
             outputType: [MessageType.JSON_DATA],
-          },
-        },
-        required: true,
-      },
-      {
-        displayName: "MDX Code",
-        name: "mdxCode",
-        type: "string",
-        typeOptions: {
-          rows: 4,
-        },
-        default: "",
-        description: "MDX code as a string",
-        displayOptions: {
-          show: {
-            outputType: [MessageType.MDX_COMPONENT],
           },
         },
         required: true,
@@ -337,18 +319,6 @@ export class GravityOutput implements INodeType {
             } catch (error) {
               throw new NodeOperationError(this.getNode(), "Invalid JSON data", { itemIndex });
             }
-            break;
-          }
-
-          case MessageType.MDX_COMPONENT: {
-            const code = this.getNodeParameter("mdxCode", itemIndex) as string;
-            this.sendMessageToUI(`Sending MDX component`);
-
-            // Use the message creation function
-            const message = createMdxComponent(baseEvent, code);
-
-            // Publish directly to gravity
-            await publisher.publishEvent(AI_RESULT_CHANNEL, message);
             break;
           }
 
