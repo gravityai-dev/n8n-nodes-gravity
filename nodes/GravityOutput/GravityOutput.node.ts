@@ -69,6 +69,19 @@ export class GravityOutput implements INodeType {
         description: "Whether to show advanced configuration options",
       },
       {
+        displayName: "Enable Audio Generation",
+        name: "enableAudio",
+        type: "boolean",
+        default: false,
+        description: "Whether to generate voice for this message",
+        displayOptions: {
+          show: {
+            advancedOptions: [true],
+            outputType: [MessageType.TEXT],
+          },
+        },
+      },
+      {
         displayName: "Message State",
         name: "state",
         type: "options",
@@ -287,10 +300,16 @@ export class GravityOutput implements INodeType {
         switch (outputType) {
           case MessageType.TEXT: {
             const text = this.getNodeParameter("textContent", itemIndex) as string;
+            const enableAudio = this.getNodeParameter("enableAudio", itemIndex, false) as boolean;
             this.sendMessageToUI(`Sending text: ${text.substring(0, 50)}...`);
 
             // Use the message creation function
             const message = createText(baseEvent, text);
+            
+            // Add voice configuration if enabled
+            if (enableAudio) {
+              message.voiceConfig = { enabled: true, textField: 'text' };
+            }
 
             // Publish directly to gravity
             await publisher.publishEvent(AI_RESULT_CHANNEL, message);

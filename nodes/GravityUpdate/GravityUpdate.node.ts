@@ -106,6 +106,18 @@ export class GravityUpdate implements INodeType {
         description: "Whether to show advanced configuration options",
       },
       {
+        displayName: "Enable Audio Generation",
+        name: "enableAudio",
+        type: "boolean",
+        default: false,
+        description: "Whether to generate voice for this message",
+        displayOptions: {
+          show: {
+            advancedOptions: [true],
+          },
+        },
+      },
+      {
         displayName: "Message State",
         name: "state",
         type: "options",
@@ -270,9 +282,15 @@ export class GravityUpdate implements INodeType {
           switch (updateType) {
             case MessageType.PROGRESS_UPDATE: {
               const message = this.getNodeParameter("message", itemIndex) as string;
+              const enableAudio = this.getNodeParameter("enableAudio", itemIndex, false) as boolean;
 
               // Use the message creation function
               const progressMessage = createProgressUpdate(baseEvent, message);
+              
+              // Add voice configuration if enabled
+              if (enableAudio) {
+                progressMessage.voiceConfig = { enabled: true, textField: 'message' };
+              }
 
               // Publish directly
               await publisher.publishEvent(outputChannel, progressMessage);
@@ -290,9 +308,15 @@ export class GravityUpdate implements INodeType {
 
             case MessageType.MESSAGE_CHUNK: {
               const text = this.getNodeParameter("text", itemIndex) as string;
+              const enableAudio = this.getNodeParameter("enableAudio", itemIndex, false) as boolean;
 
               // Use the message creation function
               const chunkMessage = createMessageChunk(baseEvent, text);
+              
+              // Add voice configuration if enabled
+              if (enableAudio) {
+                chunkMessage.voiceConfig = { enabled: true, textField: 'text' };
+              }
 
               // Publish directly
               await publisher.publishEvent(outputChannel, chunkMessage);
