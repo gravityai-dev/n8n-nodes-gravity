@@ -62,24 +62,18 @@ export class GravityOutput implements INodeType {
         required: true,
       },
       {
-        displayName: "Advanced Options",
-        name: "advancedOptions",
-        type: "boolean",
-        default: false,
-        description: "Whether to show advanced configuration options",
-      },
-      {
         displayName: "Enable Audio Generation",
         name: "enableAudio",
         type: "boolean",
         default: false,
         description: "Whether to generate voice for this message",
-        displayOptions: {
-          show: {
-            advancedOptions: [true],
-            outputType: [MessageType.TEXT],
-          },
-        },
+      },
+      {
+        displayName: "Advanced Options",
+        name: "advancedOptions",
+        type: "boolean",
+        default: false,
+        description: "Whether to show advanced configuration options",
       },
       {
         displayName: "Message State",
@@ -305,10 +299,10 @@ export class GravityOutput implements INodeType {
 
             // Use the message creation function
             const message = createText(baseEvent, text);
-            
+
             // Add voice configuration if enabled
             if (enableAudio) {
-              message.voiceConfig = { enabled: true, textField: 'text' };
+              message.voiceConfig = { enabled: true, textField: "text" };
             }
 
             // Publish directly to gravity

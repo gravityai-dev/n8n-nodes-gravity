@@ -99,23 +99,18 @@ export class GravityUpdate implements INodeType {
         required: true,
       },
       {
-        displayName: "Advanced Options",
-        name: "advancedOptions",
-        type: "boolean",
-        default: false,
-        description: "Whether to show advanced configuration options",
-      },
-      {
         displayName: "Enable Audio Generation",
         name: "enableAudio",
         type: "boolean",
         default: false,
         description: "Whether to generate voice for this message",
-        displayOptions: {
-          show: {
-            advancedOptions: [true],
-          },
-        },
+      },
+      {
+        displayName: "Advanced Options",
+        name: "advancedOptions",
+        type: "boolean",
+        default: false,
+        description: "Whether to show advanced configuration options",
       },
       {
         displayName: "Message State",
@@ -286,10 +281,10 @@ export class GravityUpdate implements INodeType {
 
               // Use the message creation function
               const progressMessage = createProgressUpdate(baseEvent, message);
-              
+
               // Add voice configuration if enabled
               if (enableAudio) {
-                progressMessage.voiceConfig = { enabled: true, textField: 'message' };
+                progressMessage.voiceConfig = { enabled: true, textField: "message" };
               }
 
               // Publish directly
@@ -312,10 +307,10 @@ export class GravityUpdate implements INodeType {
 
               // Use the message creation function
               const chunkMessage = createMessageChunk(baseEvent, text);
-              
+
               // Add voice configuration if enabled
               if (enableAudio) {
-                chunkMessage.voiceConfig = { enabled: true, textField: 'text' };
+                chunkMessage.voiceConfig = { enabled: true, textField: "text" };
               }
 
               // Publish directly
