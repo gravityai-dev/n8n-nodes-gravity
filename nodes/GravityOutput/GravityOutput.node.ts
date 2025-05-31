@@ -288,6 +288,7 @@ export class GravityOutput implements INodeType {
           providerId: nodeProviderId,
           timestamp: Date.now(),
           state: messageState,
+          type: outputType as MessageType, // Cast to MessageType enum
         };
 
         // Handle different output types

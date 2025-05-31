@@ -271,6 +271,7 @@ export class GravityUpdate implements INodeType {
             providerId: nodeProviderId,
             timestamp: Date.now(),
             state,
+            type: updateType as MessageType, // Cast to MessageType (already enum value from options)
           };
 
           // Process based on update type
